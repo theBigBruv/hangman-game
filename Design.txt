@@ -1,0 +1,18 @@
+##Design Decisions
+I added a few new properties to the models to enable the hangman game and some of the additional endpoints required
+
+User
+- wins: I used this integer property to derive a win_percentage property used for the get_user_rankings endpoint. The win property is updated at the end of every game won.
+- games_played: I used this integer property to derive a win_percentage property used for the get_user_rankings endpoint. The games_played property is updated at the end of every game (won or lost).
+- total_score: I used this integer property to derive an average_score property used for the get_user_rankings endpoint. The total_score property is updated at the end of every game won.
+- win_percentage: This is a derived float property to derive which I used for the get_user_rankings endpoint.
+- average_score: This is another derived float property to derive which I used for the get_user_rankings endpoint.
+
+Game
+- guess_history: I used this pickle property to record the game's guess history for the get_game_history endpoint. I used PickleProperty because it allowed me to store a Python List in the datastore which seemed like the most appropriate way to record the game's guess history.
+
+Score
+- final_score: I used this integer property for scoring each game. My approach to scoring was to use the number of allowed wrong letter guesses still remaining. In essence, the highest score (maximum 10) means that no wrong letters were guessed in completing the target word, while the lowest score, a loss, (minimum 0) means that 10 wrong letter guesses were made.
+
+
+To keep the implementation of this improvised Hangman game straight-forward, I made the number of wrong guesses allowed fixed/static at 10. To further enhance the game, this property could be made dynamic and prompted as a parameter at the creation of a new game. This could be used to change the level of difficulty or ease of the game.
