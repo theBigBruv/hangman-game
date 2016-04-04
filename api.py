@@ -151,7 +151,7 @@ class HangmanApi(remote.Service):
                       name='get_average_wrong_guesses_remaining',
                       http_method='GET')
     def get_average_wrong_guesses_remaining(self, request):
-        """Get the cached average wrong guesses remaining"""
+        """Get the cached average wrong guesses remaining for all active games"""
         return StringMessage(message=memcache.get(MEMCACHE_WRONG_GUESSES_REMAINING) or '')
 
     @endpoints.method(request_message=USER_REQUEST,
@@ -190,6 +190,11 @@ class HangmanApi(remote.Service):
                       http_method='GET')
     def get_high_scores(self, request):
         """Return top highest scores"""
+        if not request.number_of_results is None:
+            try:
+                number_of_results = int(request.number_of_results)
+            except ValueError:
+                raise endpoints.BadRequestException('number_of_results parameter must be numeric or blank')
         scores = Score.query().fetch(request.number_of_results)
         scores = sorted(scores, key=lambda x: x.final_score, reverse=True)
         return ScoreForms(items=[score.to_form() for score in scores])
@@ -218,13 +223,12 @@ class HangmanApi(remote.Service):
 
     @staticmethod
     def _cache_average_wrong_guesses_remaining():
-        """Populates memcache with the average wrong guesses remaining of Games"""
+        """Populates memcache with the average wrong guesses remaining of all active games"""
         games = Game.query(Game.game_over == False).fetch()
         if games:
             count = len(games)
-            total_wrong_guesses_remaining = sum([game.wrong_guesses_remaining
-                                        for game in games])
-            average = float(total_wrong_guesses_remaining)/count
+            total_wrong_guesses_remaining = sum([game.wrong_guesses_remaining for game in games])
+            average = float(total_wrong_guesses_remaining)/float(count)
             memcache.set(MEMCACHE_WRONG_GUESSES_REMAINING,
                          'The average wrong guesses remaining is {:.2f}'.format(average))
 

@@ -33,7 +33,7 @@ class SendReminderEmail(webapp2.RequestHandler):
 
 class UpdateAverageWrongGuessesRemaining(webapp2.RequestHandler):
     def post(self):
-        """Update game listing announcement in memcache."""
+        """Update average wrong guesses remaining in memcache."""
         HangmanApi._cache_average_wrong_guesses_remaining()
         self.response.set_status(204)
 
