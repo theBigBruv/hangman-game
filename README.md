@@ -6,16 +6,9 @@
 2.  Run the app with the devserver using dev_appserver.py DIR, and ensure it's
  running by visiting the API Explorer - by default localhost:8080/_ah/api/explorer.
 3.  Alternatively, deploy your application to the Google cloud platform and test out the endpoints
-<<<<<<< HEAD
- by visiting the Google API Explorer for your deployed app - link is {App ID}.appspot.com/_ah/api/explorer. 
- You can test out the endpoints via the API explorer of the sample deployed app - link is 
- https://hangman-game-1249.appspot.com/_ah/api/explorer
-||||||| merged common ancestors
- by visiting the Google API Explorer for your deployed app - link is {App ID}.appspot.com/_ah/api/explorer
-=======
  by visiting the Google API Explorer for your deployed app - link is {App ID}.appspot.com/_ah/api/explorer.
- You can test out the endpoints via the API explorer of the sample deployed app - link is   https://hangman-game-1249.appspot.com/_ah/api/explorer
->>>>>>> FETCH_HEAD
+ You can also test out the endpoints via the API explorer of the sample deployed app - link is 
+ https://hangman-game-1249.appspot.com/_ah/api/explorer
  
 
 ##Game Description:
